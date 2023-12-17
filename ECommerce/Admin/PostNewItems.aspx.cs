@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace ECommerce.Admin
 {
     public partial class PostNewItems : System.Web.UI.Page
     {
+        SqlConnection sc = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlConn"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["UserName"] == null)
@@ -21,9 +23,7 @@ namespace ECommerce.Admin
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            SqlConnection sc = new SqlConnection(@"Data Source=LAPTOP-UBSLDHDF\MSSQLSERVER1;Initial Catalog=btps;Integrated Security=True");
-
-            sc.Open();
+                        sc.Open();
             string imgname = FileUpload1.FileName;
 
             

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace ECommerce.Admin
 {
     public partial class EditProduct : System.Web.UI.Page
     {
-        SqlConnection sc = new SqlConnection(@"Data Source=LAPTOP-UBSLDHDF\MSSQLSERVER1;Initial Catalog=btps;Integrated Security=True");
+        SqlConnection sc = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlConn"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["UserName"] == null)
@@ -19,8 +20,8 @@ namespace ECommerce.Admin
                 Response.Redirect("Login.aspx");
             }
             string id = Request.QueryString["id"];
-            TextBox5.Text = id;
-            if(id == null)
+          
+            if(id == null || id == "")
             {
                 TextBox1.Visible = false;
                 TextBox2.Visible = false;
@@ -31,16 +32,22 @@ namespace ECommerce.Admin
             }
             else
             {
+                
                 TextBox5.Visible = false;
                 Button2.Visible = false;
                 DBWork db = new DBWork();
                 db.reader = db.SelectData(id);
                 if (db.reader.Read())
                 {
-                    TextBox1.Text = db.reader["productname"].ToString();
-                    TextBox2.Text = db.reader["Price"].ToString();
-                    TextBox3.Text = db.reader["dpc"].ToString();
-                    TextBox4.Text = db.reader["Type"].ToString();
+                    if (!IsPostBack)
+                    {
+                        TextBox1.Text = db.reader["productname"].ToString();
+                        TextBox2.Text = db.reader["Price"].ToString();
+                        TextBox3.Text = db.reader["dpc"].ToString();
+                        TextBox4.Text = db.reader["Type"].ToString();
+                        TextBox5.Text = id;
+                    }
+                   
                 }
             }
           

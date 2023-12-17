@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,7 @@ namespace ECommerce.Admin
 {
     public partial class RemoveProduct : System.Web.UI.Page
     {
+        SqlConnection sc = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlConn"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["UserName"] == null)
@@ -21,7 +23,6 @@ namespace ECommerce.Admin
             {
                 Response.Redirect("AllProduct.aspx");
             }
-            SqlConnection sc = new SqlConnection(@"Data Source=LAPTOP-UBSLDHDF\MSSQLSERVER1;Initial Catalog=btps;Integrated Security=True");
 
             sc.Open();
             string query = $"delete from Productdtl where id = {id}";

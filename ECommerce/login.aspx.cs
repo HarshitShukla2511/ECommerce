@@ -7,12 +7,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace ECommerce.Admin
+namespace ECommerce
 {
-    public partial class Login : System.Web.UI.Page
+    public partial class login : System.Web.UI.Page
     {
-
-        
         SqlConnection sc = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlConn"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,18 +20,18 @@ namespace ECommerce.Admin
         protected void Button1_Click(object sender, EventArgs e)
         {
             sc.Open();
-            string qry = $"select * from Admindtl where userName = '{TextBox1.Text}'";
-            SqlCommand scm = new SqlCommand(qry,sc);
-           SqlDataReader dr =  scm.ExecuteReader();
+            string qry = $"select * from userdtl where userId = '{TextBox1.Text}'";
+            SqlCommand scm = new SqlCommand(qry, sc);
+            SqlDataReader dr = scm.ExecuteReader();
 
             if (dr.Read())
             {
-                if(TextBox1.Text == dr["UserName"].ToString())
+                if (TextBox1.Text == dr["userid"].ToString())
                 {
-                    if(TextBox2.Text == dr["Password"].ToString())
+                    if (TextBox2.Text == dr["Password"].ToString())
                     {
-                        Session["UserName"] = TextBox1.Text;
-                        Response.Redirect("AllProduct.aspx");
+                        Session["userid"] = TextBox1.Text;
+                        Response.Redirect("Default.aspx");
                     }
                     else
                     {
@@ -49,6 +47,7 @@ namespace ECommerce.Admin
             {
                 Response.Write("<script>alert('Invalid Admin')</script>");
             }
+
         }
     }
 }

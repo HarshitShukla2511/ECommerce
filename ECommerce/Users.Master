@@ -44,8 +44,9 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
+        <div class="row">
               <!-- banner bg main start -->
+          
       <div class="banner_bg_main">
          <!-- header top section start -->
          <div class="container">
@@ -179,6 +180,7 @@
          </div>
          <!-- banner section end -->
       </div>
+            
       <!-- banner bg main end -->
         </div>
         <div>
